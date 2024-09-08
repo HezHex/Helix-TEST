@@ -1,0 +1,269 @@
+
+/*
+  //////////////////////////////////////
+ ////////////// Snippets: /////////////
+//////////////////////////////////////
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                                    Sistema di timer one shot resettabile:
+
+
+  // qrcode generations
+
+  // const char *data = "WIFI:T:WPA;S:HEZHEX;P:wonderfulanny854;;";        // wifi example ex. data for    password access point connection
+  // const char *data = "WIFI:S:HEZHEX;T:nopass;P:;H:false;;";             // wifi example ex. data for No password access point connection 
+  // const char *data = "WIFI:T:nopass;S:HEZHEX;;";                        // wifi example ex. data for No password access point connection 
+  // const char *data = "http://192.168.1.4/#temp";                        // Connect to webpage (eg. Control room internal server)
+  // lv_qrcode_update(ui_QR, data, strlen(data));                          // change qrcode image
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                                    Sistema di timer one shot resettabile:
+
+
+//dichiarazione timer all'inizio del file
+
+void WriteTempSet_CB(void *arg);
+const esp_timer_create_args_t WriteTempSetTimer_args = {         //   TIMER per scrittura Setpoint auto resettante per pressioni multiple
+    .callback = &WriteTempSet_CB,                                //   Setta il setpoint dopo 3 secondi dall'ultima pressione
+    .name = "WriteTempSetTimer"};                                //
+esp_timer_handle_t WriteTempSet_Timer;                           //
+
+in void Example_Init() {
+  esp_timer_create(&WriteTempSetTimer_args, &WriteTempSet_Timer);           //Creo il timer per la scrittura setpoint con touch multipli
+}
+
+in void Set_Variable(float NewSetPoint /*= NULL*/)
+{
+                                                                                    //    TIMER per scrittura Setpoint auto resettante per pressioni multiple
+ if(esp_timer_is_active(WriteTempSet_Timer)) {                                      //    se il timer è attivo 
+   esp_timer_stop(WriteTempSet_Timer);                                              //    lo fermo 
+   esp_timer_start_once(WriteTempSet_Timer, 3000000);                               //    e lo faccio ripartire 
+ }                                                                                  //                                NB:3000000 = 3 secondi
+ else {                                                                             //    altrimenti
+   esp_timer_start_once(WriteTempSet_Timer, 3000000);                               //    lo avvio per la prima volta
+ }
+}
+
+//timer callback
+void WriteTempSet_CB(void *arg) {
+
+ Write_Set();                                                                       //scrivo i set alla chaimata del timer
+
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                                                Esempio Warning Indicator:
+
+se errore Force_WARNING = true;
+se errore rientrato Force_WARNING = false;
+
+altrimenti premere pulsante reset su ui
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                                  Esempio accensione istantanea spia memory:
+
+ Helix_Memory_Writing = true;            //turn on memory writing indicator
+ GUI_IndicatorCB();                      //force gui indicator callback
+
+  ///do stuff........
+
+ Helix_Memory_Writing = false;           //turn off memory writing indicator
+ GUI_IndicatorCB();                      //force gui indicator callback (this las are optional)
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                                           
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                                                Esempio Aggiornamento label Thread-Safe:
+
+void a(){
+ if (ReadTemp != TEMP)
+    {
+      TEMP = ReadTemp;  ///sono variabili globali
+      lv_async_call(GUI_Temp_Update,NULL);
+    }
+}
+
+void GUI_Temp_Update(void * ptr) {
+
+      char TempString[8];
+      dtostrf(TEMP, 1, 1, TempString); // Adatta la teperatura ad essere scritta
+
+      LS.print("Temp: "); // print readings
+      LS.println(TempString);
+
+  if (lv_obj_is_valid(ui_TempLabel))
+      {
+        lv_label_set_text_fmt(ui_TempLabel, "%s°", TempString); // scrive la temperatura sul label del mainscreen
+      }
+      if (lv_obj_is_valid(ui_IdleTempLabel))
+      {
+        lv_label_set_text_fmt(ui_IdleTempLabel, "%s°", TempString); // scrive la temperatura sul label dell'idlescreen
+      }
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                                                Settings Update instructions:
+
+
+after change a setting variable call: Helix_Update_Settings();
+example:
+void Set_Temp(bool up)
+{
+  if (up == true)
+  {
+    Room_Setpoint = (Room_Setpoint + SETPOINT_INC_VALUE);
+  }
+  else
+  {
+    Room_Setpoint = (Room_Setpoint - SETPOINT_INC_VALUE);
+  }
+
+  char ChrSetp[8];
+  dtostrf(Room_Setpoint, 1, 1, ChrSetp); // Adatta il setpoint ad essere scritta
+  lv_label_set_text(ui_SetLab, ChrSetp);
+  Helix_Update_Settings();
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                                                SQUARELINE studio update ui instructions:
+
+
+╔════════════════════════════════════════════════════════════════════════════════════════╗
+║ NB if you use "Helix Helper.exe" there is some section for THIS                        ║ 
+╚════════════════════════════════════════════════════════════════════════════════════════╝
+
+in "ui_events.h" 12
+
+- add : #include "ui.h" 
+- add : all new events callbacks
+
+- adapt QRCODE in all files
+
+REMOVE ui_events.c
+
+╔════════════════════════════════════════════════════════════════════════════════════════╗
+║ NB REDO ALL THIS THINGS EVERYTIME YOU UPDATE THE UI FILES WITH SQUARELINE STUDIO!!!!!! ║
+╚════════════════════════════════════════════════════════════════════════════════════════╝
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                                                QRCODE instructions:
+
+
+╔════════════════════════════════════════════════════════════════════════════════════════╗
+║ NB if you use "Helix Helper.exe" there is a section for THIS                           ║ 
+╚════════════════════════════════════════════════════════════════════════════════════════╝
+
+--------in ui_ConnectionScreen.c 58 - 65
+
+ui_QR = lv_qrcode_create(ui_ConnPan , 100, lv_color_hex3(0x33f), lv_color_hex3(0xeef));
+lv_obj_set_width( ui_QR, 100);
+lv_obj_set_height( ui_QR, 100);
+lv_obj_set_x( ui_QR, -1 );
+lv_obj_set_y( ui_QR, -1 );
+lv_obj_set_align( ui_QR, LV_ALIGN_TOP_RIGHT );
+lv_obj_add_flag( ui_QR, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
+lv_obj_clear_flag( ui_QR, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
+
+///////////////////////////////////////////////////
+
+--------in ui.h 43
+
+extern lv_obj_t *ui_QR;
+
+///////////////////////////////////////////////////
+
+--------in ui.c 42
+
+lv_obj_t *ui_QR;
+
+and remove ui_QRCodeFAkeIMG everywhere
+
+╔════════════════════════════════════════════════════════════════════════════════════════╗
+║ NB REDO ALL THIS THINGS EVERYTIME YOU UPDATE THE UI FILES WITH SQUARELINE STUDIO!!!!!! ║
+╚════════════════════════════════════════════════════════════════════════════════════════╝
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                                                ADD NEW VARIABLE INSTRUCTIONS:
+
+╔════════════════════════════════════════════════════════════════════════════════════════╗
+║ NB if you use "Helix Helper.exe" there ise a section for THIS                          ║ 
+╚════════════════════════════════════════════════════════════════════════════════════════╝
+
+--------in Helix_Memory.cpp   /*Blocco di Creazione variabili*/
+String AP_Prefix_SSID_Name = "Helix_AP_";
+
+
+///////////////////////////////////////////////////
+
+--------in Helix_Memory.cpp   /*Blocco di Lettura variabili*/
+
+AP_Prefix_SSID_Name = jset["AP_Prefix_SSID_Name"].as<String>();
+
+///////////////////////////////////////////////////
+
+--------in Helix_Memory.cpp  /*Blocco di Scrittura variabili*/
+
+jset["AP_Prefix_SSID_Name"] = AP_Prefix_SSID_Name;
+
+///////////////////////////////////////////////////
+
+--------in Helix_Memory.h   /*Blocco di Globalizzazione variabili*/
+
+extern String AP_Prefix_SSID_Name ;
+
+
+
+╔════════════════════════════════════════════════════════════════════════════════════════╗
+║ NB REDO ALL THIS THINGS EVERYTIME YOU NEED TO ADD CONFIGURATION VARIABLES!!!!!!        ║
+╚════════════════════════════════════════════════════════════════════════════════════════╝
+///////////////////////////////////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                                                MULTICORE LOOP instructions:
+
+/*
+  xTaskCreatePinnedToCore( //                                                     il core 0 deve essere risevato al wifi non puoi usarlo
+      SensorsLoop,         // Function to implement the task
+      "SensorsLoop",       // Name of the task
+      1700,                // Stack size in bytes
+      NULL,                // Task input parameter
+      2,                   // Priority of the task                                il task deve essere almeno di 1 altrimenti gira il loop principale e non questo
+      NULL,                // Task handle.
+      1                    // Core where the task should run 0 originale          il core 0 deve essere risevato al wifi non puoi usarlo
+  );
+*/
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                                                Time System Settings:
+
+
+╔═════════════════════════════════════════════╗
+║     String ntpServer = "pool.ntp.org";      ║     ╔════════════════════════════════════════╗
+║     long gmtOffset_sec = 3600;              ╠═════╣     These Settings are for ITALY       ║
+║     int daylightOffset_sec = 3600;          ║     ╚════════════════════════════════════════╝
+╚═════════════════════════════════════════════╝
+
+
+Adjust the UTC offset for your timezone (in seconds). Refer to the list of UTC time offsets. Here are some examples for various time zones: https://en.wikipedia.org/wiki/List_of_UTC_offsets
+For UTC -5.00 : -5 * 60 * 60 : -18000
+For UTC +1.00 : 1 * 60 * 60 : 3600
+For UTC +0.00 : 0 * 60 * 60 : 0
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                                                MAC Address HACK:
+
+
+  uint8_t baseMac[6];                         // Mac address variable
+  esp_read_mac(baseMac, ESP_MAC_WIFI_STA);    // READ base mac
+  baseMac[0] = 0x00;                          // I change the first three values ​​of the mac address with:
+  baseMac[1] = 0x09;                          // 00:09:0E which corresponds to the Base Mac of Helix Technologies
+  baseMac[2] = 0x0E;                          // that came from: https://macvendors.com/
+  esp_wifi_set_mac(WIFI_IF_STA, &baseMac[0]); // Set the hacked mac address

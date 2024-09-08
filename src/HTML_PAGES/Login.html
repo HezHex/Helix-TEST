@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Helix Login Page</title>
+    <link rel="icon" href="Logo.png" type="image/icon type">
+
+    <meta name="Helix system login page" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="HELIX.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+    <div id="header">
+        <span class="logo_container"><img src="Logo.png" alt="logo sito web" class="logo">
+            <h3>&nbspHelix Login Page</h3>
+        </span>
+    </div>
+
+    <div id="container">
+        <div class="three-columns-grid">
+            <div>
+<!-- EMPTY DIV - left coloumn of the page-->
+            </div>
+            <div>
+                <form action="/auth" method="POST">
+                    <label for="LoginUser">First name:</label>
+                    <input type="text" id="LoginUser" name="LoginUser"><br><br>
+                    <label for="LoginPass">Password:&nbsp</label>
+                    <input type="password" id="LoginPass" name="LoginPass"><br><br>
+                    <label>
+                        <input type='checkbox' onclick="TogglePassDots() " /> Show Password
+                    </label>
+                    <input type="submit" value="Login" class="login">
+                </form>
+
+                <br><br>
+
+                <div id="indications">
+                    <h3>Default user: admin</h3>
+                    <br>
+                    <h3>Default password: helix</h3>
+                </div>
+
+            </div>
+            <div>
+<!-- EMPTY DIV - right coloumn of the page-->
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <span class="logo_container">
+            <h3>&nbsp %SIGNALSTRENGTH% </h3>
+        </span>
+    </div>
+
+
+    <script src="" async defer></script>
+
+    <script>
+
+        function TogglePassDots() {
+            var x = document.getElementById("LoginPass");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+
+        function getURLParameter(sParam) {
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++) {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam) {
+                    return sParameterName[1];
+                }
+            }
+        }
+        if (getURLParameter("msg")) {
+            document.getElementById("message").innerText = decodeURI(getURLParameter("msg"));
+        }
+    </script>
+</body>
+
+</html>

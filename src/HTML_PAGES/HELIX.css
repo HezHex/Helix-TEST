@@ -1,0 +1,431 @@
+@font-face {
+    font-family: HelixFont;
+    src: url(Font.otf);
+
+}
+
+@font-face {
+    font-family: HelixFontMicro;
+    src: url(Micro.ttf);
+}
+
+
+body {
+    font-family: HelixFont;
+    margin: 0px;
+}
+
+#header {
+    width: 100vw;
+    height: 5vh;
+    /*5vh*/
+    background-color: #f1f1f1;
+    position: relative;
+    overflow: auto;
+    display: block;
+}
+
+.logo_container {
+    /* display: flex;*/
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    height: inherit;
+}
+
+img.logo {
+
+    float: left;
+    width: auto;
+    height: inherit;
+}
+
+
+#container {
+    width: 100vw;
+    height: 90vh;
+    background-color: #ccc;
+    text-align: center;
+    position: relative;
+    overflow: auto;
+    display: block;
+}
+
+.Homebutton {
+    width: 100vw;
+    height: 90vh;
+    background-color: #ccc;
+    text-align: center;
+    position: relative;
+    overflow: auto;
+    display: block;
+}
+
+
+#footer {
+    width: 100vw;
+    height: 5vh;
+    background-color: #4c7faf;
+}
+
+#Fileman_Table {
+    margin-right: auto;
+    margin-left: auto;
+    height: auto;
+    /* border: 10px solid black;*/
+    border: none;
+}
+
+#Fileman_Table_Column {
+    border: none;
+}
+
+#Fileman_Table_Row {
+    border: none;
+}
+
+
+#upload-button {
+    background-color: #4c7faf;
+    margin-left: 5px;
+    border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: calc(10px + 0.390625vw);
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+    font-family: HelixFont;
+    margin-left: auto;
+    display: block;
+}
+
+input[type=password] {
+    background-color: #ffffff;
+    /* Green */
+    border: 1px solid cornflowerblue;
+    color: rgb(0, 0, 0);
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    /* display: inline-block;*/
+    font-size: calc(10px + 0.390625vw);
+    margin: auto;
+    cursor: pointer;
+    border-radius: 12px;
+    font-size: calc(10px + 0.390625vw);
+    font-family: HelixFont;
+}
+
+input[type=text] {
+    background-color: #ffffff;
+    /* Green */
+    border: 1px solid cornflowerblue;
+    color: rgb(0, 0, 0);
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    /* display: inline-block;*/
+    font-size: calc(10px + 0.390625vw);
+    margin: auto;
+    cursor: pointer;
+    border-radius: 12px;
+    font-size: calc(10px + 0.390625vw);
+    font-family: HelixFont;
+}
+
+
+input[type=file] {
+    background-color: #ffffff;
+    border: none;
+    color: rgb(0, 0, 0);
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: auto;
+    cursor: pointer;
+    border-radius: 12px;
+    font-size: calc(10px + 0.390625vw);
+    font-family: HelixFont;
+}
+
+input[type=file]::file-selector-button {
+    background-color: #4c7faf;
+    border: none;
+    margin-left: 5px;
+    padding: 10px;
+    border-radius: 12px;
+    color: white;
+    cursor: pointer;
+    font-size: calc(10px + 0.390625vw);
+    font-family: HelixFont;
+    transition: background .2s ease-in-out;
+}
+
+input[type=submit] {
+    background-color: #4c7faf;
+    margin-left: 5px;
+    border: none;
+    padding: 15px;
+    border-radius: 20px;
+    color: white;
+    cursor: pointer;
+    font-size: calc(10px + 0.390625vw);
+    font-family: HelixFont;
+    transition: background .2s ease-in-out;
+}
+
+option {
+    background-color: #ffffff;
+    /* Green */
+    border: none;
+    color: rgb(0, 0, 0);
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    /* display: inline-block;*/
+    font-size: calc(10px + 0.390625vw);
+    margin: auto;
+    cursor: pointer;
+    border-radius: 12px;
+    font-size: calc(10px + 0.390625vw);
+    font-family: HelixFont;
+}
+
+select {
+    background-color: #ffffff;
+    /* Green */
+    border: 1px solid cornflowerblue;
+    color: rgb(0, 0, 0);
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    /* display: inline-block;*/
+    font-size: calc(10px + 0.390625vw);
+    margin: auto;
+    cursor: pointer;
+    border-radius: 12px;
+    font-size: calc(10px + 0.390625vw);
+    font-family: HelixFont;
+}
+
+
+
+
+form {
+    display: inline-block;
+    margin: auto;
+    font-family: HelixFont;
+}
+
+
+
+input[type=password],
+input[type=text] {
+    background-color: #ffffff;
+    /* Green */
+    border: none;
+    color: rgb(0, 0, 0);
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: calc(10px + 0.390625vw);
+    margin: auto;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+
+input.login {
+    background-color: #4c7faf;
+
+    border: none;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: calc(10px + 0.390625vw);
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20px;
+    font-family: HelixFont;
+    margin-left: auto;
+    display: block;
+}
+
+input.HelixButton {
+    background-color: #4c7faf;
+
+    border: none;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: calc(10px + 0.390625vw);
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20px;
+    font-family: HelixFont;
+    margin-left: auto;
+    display: block;
+}
+
+#indications {
+    display: inline-block;
+    margin: auto;
+    max-width: 30em;
+    background-color: #4c7faf;
+    border: 10px solid #4c7faf;
+    color: white;
+    border-radius: 12px;
+    /* font-family: HelixFont;*/
+    font-family: HelixFontMicro !important;
+    font-size: calc(5px + 0.390625vw);
+    letter-spacing: .2rem;
+
+}
+
+
+.logout_container {
+
+    position: relative;
+    top: -20%;
+    display: flex;
+    vertical-align: top;
+    display: inline-flex;
+    text-align: right;
+    justify-content: right !important;
+    height: inherit;
+
+}
+
+.content {
+    padding: 10px;
+}
+
+.topnav {
+    overflow: hidden;
+    background-color: #4c7faf;
+    color: white;
+    /* font-size: 1rem;*/
+    font-size: calc(10px + 0.390625vw);
+    border-radius: 5px;
+}
+
+
+.reading {
+    font-size: calc(10px + 0.390625vw);
+    /* font-size: 1.4rem;*/
+}
+
+/* container */
+.three-columns-grid {
+    display: grid;
+    grid-auto-rows: 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    vertical-align: middle;
+}
+
+/* columns */
+.three-columns-grid>* {
+    padding: 1rem;
+}
+
+
+/*Settings css*/
+
+
+* {
+    box-sizing: border-box;
+}
+
+
+/* Float four columns side by side */
+.column {
+    float: left;
+    width: 33%;
+    padding: 0 10px;
+    vertical-align: middle;
+
+    align-items: stretch;
+    display: flex;
+    /*Make sure to call this on your container*/
+    align-items: stretch;
+    /*stretches all cards same height*/
+    justify-content: space-around;
+    /*some space between cards*/
+
+    /*  box-shadow: 2px 2px 12px 1px rgba(255, 0, 0, 255);*/
+
+}
+
+/* Remove extra left and right margins, due to padding in columns */
+.row {
+
+    display: flex;
+    /* adding flex */
+    flex-wrap: wrap;
+    /* Wrapping Elements when page is small */
+    /*   box-shadow: 2px 2px 12px 1px rgba(0, 255, 0, 255);*/
+}
+
+
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Style the counter cards */
+.card {
+
+    box-shadow: 2px 2px 12px 1px rgba(100, 100, 100, 0.5);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    background-color: white;
+    margin: 10px;
+    /* flex: 0 0 100%;*/
+    flex: auto;
+
+}
+
+*{
+    box-sizing:border-box;           /* easier box-model calculations */
+    -webkit-box-sizing: border-box;
+  }
+  html, body {
+    height: 100%;
+    margin:0;
+  }
+  
+  textarea {
+  /*  position: fixed;*/
+    left:10px; top:10px;
+    width:  calc(100vw - 20px);      /* calc and viewport to the rescue */
+  /*  height: calc(100vh - 20px);*/
+   /* resize: none;*/
+  }
+.Terminal_Input {
+   left:10px;
+   width:  calc(100vw - 200px);
+}
+
+
+/* Responsive columns - one column layout (vertical) on small screens */
+@media screen and (max-width: 1300px) {
+.column {
+        width: 100%;
+        display: block;
+        margin-bottom: 20px;
+    }
+}

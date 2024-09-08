@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Helix File Manager</title>
+    <link rel="icon" href="Logo.png" type="image/icon type">
+
+    <meta name="Helix system Login page" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="HELIX.css">
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+    <div id="header">
+        <span class="logo_container"><img src="Logo.png" alt="logo sito web" class="logo">
+            <h3>&nbspHelix File Manager</h3>
+        </span>
+    </div>
+    <div id="container">
+        <br>
+        <div class="three-columns-grid">
+            <div>
+                <div class="logout_container">
+                    <form action="/home">
+                        <input type="submit" value="Home">
+                    </form>
+                </div>
+            </div>
+            <div>
+
+            </div>
+            <div>
+                <div class="logout_container">
+                    <form action="/logout">
+                        <input type="submit" value="Logout">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="topnav">
+            <h3>File Upload</h3>
+            <p>Free Storage: %FREESPIFFS% | Used Storage: %USEDSPIFFS% | Total Storage: %TOTALSPIFFS%</p>
+        </div>
+        <!-- 
+    </div>
+
+    <div id="container2">
+        -->
+
+        <table id="Fileman_Table">
+            <tr id="Fileman_Table_Row">
+                <th id="Fileman_Table_Column">
+                    <br>
+                    <form method="POST" action="/upload" enctype="multipart/form-data">
+                        <input type="file" name="data" />
+                        <input type="submit" name="upload" value="Upload" title="Upload File">
+                    </form>
+                </th>
+            </tr>
+            <tr id="Fileman_Table_Row">
+                <th id="Fileman_Table_Column">
+                    <br>
+                    <form method="POST" enctype="multipart/form-data">
+                        %FILELIST%
+               <br>
+                        <span class="logo_container">   </span> 
+                            <br>
+                            <br>
+                            <span class="logo_container">
+                        <input class="logo" type="submit" name="download" value="download" title="Download File"
+                            formaction="/download?action=Download_File&File_List=">&emsp;&emsp;&emsp;&emsp;
+                        <input class="logo" type="submit" name="delete" value="delete" style="background-color: #ff0000;" title="Delete File"
+                        onclick="clicked(event)" formaction="/delete?action=Delete_File&File_List=">
+                        </span>
+
+                    </form>
+                </th>
+            </tr>
+        </table>
+    </div>
+
+    <div id="footer">
+        %SW_VERSION%
+    </div>
+
+    <script>
+function clicked(e)
+{
+    if(!confirm('Are you sure?')) {
+        e.preventDefault();
+    }
+}
+    </script>
+
+    <script src="" async defer></script>
+</body>
+
+</html>

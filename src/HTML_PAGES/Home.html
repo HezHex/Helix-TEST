@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Helix Home Page</title>
+    <link rel="icon" href="Logo.png" type="image/icon type">
+
+    <meta name="Helix system Home page" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="HELIX.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+</head>
+
+<body onload="LoadAjax()">
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+    <div id="header">
+        <span class="logo_container"><img src="Logo.png" alt="logo sito web" class="logo">
+            <h3>&nbspHelix Home Page</h3>
+        </span>
+    </div>
+
+
+    <div id="container">
+        <div class="three-columns-grid">
+
+            %HOME_BUTTONS%
+
+            <div>
+                <div class="logout_container">
+                    <form action="/settings">
+                        <input type="submit" value="Settings">
+                    </form>
+                </div>
+            </div>
+            <div>
+                <div class="logout_container">
+                    <form action="/logout">
+                        <input type="submit" value="Logout">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="topnav">
+            <h3> %ROOM_NAME% Actual Readings</h3>
+        </div>
+
+        <div class="row">
+
+            <!-- Settings Cards init -->
+
+            <div class="column"> <!-- SERVER Login Setting -->
+                <div class="card">
+                    <p><i class="fas fa-thermometer-half" style="color:#059e8a;"></i> TEMPERATURE</p>
+                    <p><span class="reading"><span id="temp">%TEMPERATURE%</span> &deg;C</span></p>
+                </div>
+            </div>
+
+            <div class="column"> <!-- WiFi SSID Settings -->
+                <div class="card">
+                    <p><i class="fas fa-tint" style="color:#00add6;"></i> HUMIDITY</p>
+                    <p><span class="reading"><span id="hum">%HUMIDITY%</span> &percnt;</span></p>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="card">
+
+
+                    <p><i class="fas fa-thermometer-half" style="color:#00add6;"></i> SETPOINT</p>
+                    <span><span class="reading">
+
+                            <form id="UPForm" action="/home">
+                                <input type="hidden" name="Command" value="upSET">
+                                <input type="submit" value="+">
+                            </form>
+
+                            <form id="DownForm" action="/home">
+                                <input type="hidden" name="Command" value="downSET">
+                                <input type="submit" value="-">
+                            </form>
+
+                            <br /><span id="set">%SETPOINT%</span> &deg;C
+                        </span>
+                    </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer">
+        <span class="logo_container">
+            <h3>&nbsp %SW_VERSION% %SIGNALSTRENGTH% </h3>
+        </span>
+    </div>
+
+    <script src="" async defer></script>
+
+    <script>
+        if (!!window.EventSource) {
+
+            var source = new EventSource('/events');
+
+            source.addEventListener('open', function (e) {
+                console.log("Events Connected");
+            }, false);
+
+            source.addEventListener('error', function (e) {
+                if (e.target.readyState != EventSource.OPEN) {
+                    console.log("Events Disconnected");
+                }
+            }, false);
+
+            source.addEventListener('message', function (e) {
+                console.log("message", e.data);
+            }, false);
+
+            source.addEventListener('temperature', function (e) {
+                console.log("temperature", e.data);
+                document.getElementById("temp").innerHTML = e.data;
+            }, false);
+
+            source.addEventListener('humidity', function (e) {
+                console.log("humidity", e.data);
+                document.getElementById("hum").innerHTML = e.data;
+            }, false);
+
+            source.addEventListener('setpoint', function (e) {
+                console.log("setpoint", e.data);
+                document.getElementById("set").innerHTML = e.data;
+            }, false);
+
+        }
+    </script>
+
+    <script>
+
+        async function LoadAjax() {
+            const response = await fetch('/UpdHomeAjax', { method: 'POST' });
+            console.log(response);
+        }
+
+        function getURLParameter(sParam) {
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++) {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam) {
+                    return sParameterName[1];
+                }
+            }
+        }
+        if (getURLParameter("msg")) {
+            document.getElementById("message").innerText = decodeURI(getURLParameter("msg"));
+        }
+    </script>
+
+</body>
+
+</html>

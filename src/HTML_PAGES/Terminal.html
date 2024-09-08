@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Helix TERMINAL Page</title>
+    <link rel="icon" href="Logo.png" type="image/icon type">
+
+    <meta name="Helix system Home page" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="HELIX.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+    <div id="header">
+        <span class="logo_container"><img src="Logo.png" alt="logo sito web" class="logo">
+            <h3>&nbspHelix TERMINAL Page</h3>
+        </span>
+    </div>
+
+
+    <div id="container">
+        <div class="three-columns-grid">
+            <div>
+                %FILEMAN_BUTTON%
+            </div>
+            <div>
+                <div class="logout_container">
+                    <form action="/home">
+                        <input type="submit" value="Home">
+                    </form>
+                </div>
+            </div>
+            <div>
+                <div class="logout_container">
+                    <form action="/logout">
+                        <input type="submit" value="Logout">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="topnav">
+            <h3> %ROOM_NAME% TERMINAL</h3>
+        </div>
+
+        <div class="row">
+
+            <!-- Settings Cards init -->
+            <form id="Terminal_form" action="/TERMINAL_SEND">
+                <p><label for="TERMINAL_in">TERMINAL</label></p>
+                <textarea id="TERMINAL_in" name="TERMINAL_in" rows="30" readonly="true" cols="50" ></textarea>
+                <br>
+                <input class="Terminal_Input" id = "SEND_TB" name="TB_Send" type="input" value="">
+                <input type="submit" value="Send">
+            </form>
+
+        </div>
+
+    </div>
+
+    <div id="footer">
+        <span class="logo_container">
+            <h3>&nbsp %SW_VERSION% %SIGNALSTRENGTH% </h3>
+        </span>
+    </div>
+
+    <script src="" async defer></script>
+
+    <script>
+        //get the form from DOM (Document object model) 
+        var form = document.getElementById('Terminal_form');
+        form.onsubmit = function (event) {
+            var xhr = new XMLHttpRequest();
+            var data = new FormData(form);
+            //Add extra data to form before submission.
+            //  data.append("referer","https://example.com");
+            //open the request
+            xhr.open('POST', '/TERMINAL_SEND')
+            //send the form data
+            xhr.send(data);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    form.reset(); //reset form after AJAX success.
+                }
+            }
+            //Dont submit the form.
+            return false;
+        }
+    </script>
+
+
+    <script>
+        if (!!window.EventSource) {
+
+            var source = new EventSource('/AJTerm');
+
+            source.addEventListener('open', function (e) {
+                console.log("Events Connected");
+            }, false);
+
+            source.addEventListener('error', function (e) {
+                if (e.target.readyState != EventSource.OPEN) {
+                    console.log("Events Disconnected");
+                }
+            }, false);
+
+            source.addEventListener('message', function (e) {
+                console.log("message", e.data);
+            }, false);
+
+            source.addEventListener('TERMINAL_in', function (e) {
+                console.log("TERMINAL_in", e.data);
+                document.getElementById("TERMINAL_in").innerHTML += e.data;
+                document.getElementById("TERMINAL_in").innerHTML += '\r\n';
+                document.getElementById("TERMINAL_in").scrollTop = document.getElementById("TERMINAL_in").scrollHeight
+            }, false);
+            source.addEventListener('TERMINAL_in_NOCR', function (e) {
+                console.log("TERMINAL_in_NOCR", e.data);
+                document.getElementById("TERMINAL_in").innerHTML += e.data;
+                document.getElementById("TERMINAL_in").scrollTop = document.getElementById("TERMINAL_in").scrollHeight
+            }, false);
+
+
+        }
+    </script>
+
+    <script>
+        function getURLParameter(sParam) {
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++) {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam) {
+                    return sParameterName[1];
+                }
+            }
+        }
+        if (getURLParameter("msg")) {
+            document.getElementById("message").innerText = decodeURI(getURLParameter("msg"));
+        }
+    </script>
+
+</body>
+
+</html>

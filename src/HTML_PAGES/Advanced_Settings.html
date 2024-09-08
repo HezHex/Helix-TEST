@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Helix Settings Page</title>
+    <link rel="icon" href="Logo.png" type="image/icon type">
+
+    <meta name="Helix System settings page" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="HELIX.css">
+
+</head>
+
+<body onload="LoadAjax()">
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+    <div id="header">
+        <span class="logo_container"><img src="Logo.png" alt="logo sito web" class="logo">
+            <h3>&nbspHelix Settings Page</h3>
+        </span>
+    </div>
+
+    <div id="container">
+        <br>
+        <div class="three-columns-grid">
+            <div>
+                <div class="logout_container">
+                    <form action="/home">
+                        <input type="submit" value="Home">
+                    </form>
+                </div>
+            </div>
+            <div>
+
+            </div>
+            <div>
+                <div class="logout_container">
+                    <form action="/logout">
+                        <input type="submit" value="Logout">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="topnav">
+            <h3>Advanced Settings</h3>
+        </div>
+
+        <form method="POST" name="ADV_Sett" id="ADV_Sett" action="/ADV_settings_set">
+
+            %ADV_SETTINGS_BODY%
+
+            <div class="column">
+                <div class="card" >
+                    <br>
+                    <input type="submit" value="Update and Reboot" class="HelixButton">
+                    <br>
+                </div>
+            </div>
+
+        </form>
+     
+
+
+
+        <!-- Settings Card template:
+
+    simply add:
+
+ <div class="column">
+    <div class="card"> 
+        	<p><i> ICON </i>Content Title</p>
+
+        CONTENT YOW NEED 
+    
+    </div>
+  </div>
+
+-->
+
+
+        <!-- Settings Cards END -->
+
+    </div>
+
+    <!-- </div>
+     <div class="row">
+    
+-->
+
+    </div>
+    <div id="footer">
+        <span class="logo_container">
+            <h3>&nbsp %SW_VERSION% %SIGNALSTRENGTH% </h3>
+        </span>
+    </div>
+
+ 
+</body>
+
+</html>

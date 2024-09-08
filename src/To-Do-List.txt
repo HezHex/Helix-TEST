@@ -1,0 +1,79 @@
+
+/*
+  ///////////////////////////////////////
+ ////////////// checklist: /////////////
+///////////////////////////////////////
+
+NB AGGIORNARE LA CECKLIST CON UN + AL POSTO DEL - QUANDO COMPLETI UN PUNTO
+
++ ultimare (nei limiti del possibile) interfaccia grafica
++ creare soluzione Thread-Safe per aggiornare i label (Crasha con touch ripetuti)
++ creare sistema di scrittura / lettura settings su sd card (Leggi note in fondo)
++ creare sistema di factory reset
++ creare sistema di modifica setpoint temperatura con memoria su sd card (Manca messaggi in mqtt)
++ creare sistema di fade in e fade out schermo con caricamento idleScreen                        (vedere vecchio progetto)
+/ creare ed integrare con oppurtuni delay il led rgb frontale
++/ Aggiornare tutti i file con il nuovo sistema di logging e scrittura seriale:
+                                                                              +serial_comm
+                                                                              +display (parziale, da rivedere livello logging su errori e info importanti)
+                                                                              +sensors (parziale, bisogna integrare controllo errori)
+                                                                              +main.cpp
+                                                                              +memory
+                                                                              +indicators
+                                                                              -wifi
++ modificare sistema di logging seriale con lettura parametro priorità su file di settings
++ creare sistema di scrittura log su textbox ui
+
+/ creare sistema di connessione wifi 
+- STUDIARE FATTIBILITA' E REALIZZARE SISTEMA MESH WIRELESS
+- creare sistema di settaggio ssid e password wifi con toggling access point
++ creare e integrare sistema qrcode per apertura veloce pagina wifi e access point              (Sistema QRCODE ok, da integrare con wifi e ap mode)
++ creare webserver con accesso sicuro
+X creare (se è fattibile) servizio ftp per managment file sd (disattivato di default su versione software definitiva, ma attivabile tramite webpage)
+                    ╚> Sistema non fattibile per mancanza di ram
++                                                             ╚>    ALTERNATIVA : Sistema di Upload, e Cancellazione file per file tramite WebServer e pagine web disattivabile con switch su UI spento di default
+
+- STUDIARE FATTIBILITA' E REALIZZARE INTEGRAZIONE GOOGLE HOME - ALEXA - HOME ASSISTANT (esiste una libreria, ma devi controllare se è meglio farlo tramite nodered) 
+- creare sistema di comunicazione mqtt                                                          (vedere vecchio progetto)
+- integrare sistema messaggistica mqtt con:
+                                            - temperatura e umidità                             (vedere vecchio progetto) (Helix_Sensors.cpp linea 73 e 80)
+                                            - setpoint                                          (vedere vecchio progetto) (Helix_Sensors.cpp linea 161)
+                                            - rilevamento errori                                (Creare)
+                                            - aggiornamento ora                                 (Creare)
+                                            - impostazione setpoint remoto                      (vedere vecchio progetto) (Helix_Sensors.cpp linea 127 usare funzione Set_Temp(true,Float Newsetpoint))
+
+/ creare ed integrare sistema spie con wifi,mqtt,access point,e errori server                   (Creato bisogna integrare)
+                                                                                +SD Card            INTEGRATO
+                                                                                +WiFi               DA INTEGRARE
+                                                                                +Access Point       DA INTEGRARE 
+                                                                                -mqtt               DA INTEGRARE 
+                                                                                +forzatura warning  INTEGRATO
+
+
++ creare sistema di aggiornamento orario
++ rimuovere tutte le feature inutilizzate di lvgl
+- testare l'alimentazione stand-alone
+*/
+
+
+
+
+
+----------------------------------------------------------
+----------------------------------------------------------
+----------------------------------------------------------
+----------------------------------------------------------
+----------------------------------------------------------
+----------------------------------------------------------
+----------------------------------------------------------
+----------------------------------------------------------
+----------------------------------------------------------
+----------------------------------------------------------
+----------------------------------------------------------
+----------------------------------------------------------
+----------------------------------------------------------
+----------------------------------------------------------
+----------------------------------------------------------
+----------------------------------------------------------
+----------------------------------------------------------
+----------------------------------------------------------

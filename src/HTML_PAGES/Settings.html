@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Helix Settings Page</title>
+    <link rel="icon" href="Logo.png" type="image/icon type">
+
+    <meta name="Helix System settings page" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="HELIX.css">
+
+</head>
+
+<body onload="LoadAjax()">
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+    <div id="header">
+        <span class="logo_container"><img src="Logo.png" alt="logo sito web" class="logo">
+            <h3>&nbspHelix Settings Page</h3>
+        </span>
+    </div>
+
+    <div id="container">
+        <br>
+        <div class="three-columns-grid">
+            <div>
+                <div class="logout_container">
+                    <form action="/home">
+                        <input type="submit" value="Home">
+                    </form>
+                </div>
+            </div>
+       <!--  <div>
+
+                <div class="logout_container">
+                    <form action="/ADV_Settings">
+                        <input type="submit" value="Expert">
+                    </form>
+                </div>
+
+
+            </div>
+        -->  
+        %SETTINGS_BUTTONS%
+            <div>
+                <div class="logout_container">
+                    <form action="/logout">
+                        <input type="submit" value="Logout">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="topnav">
+            <h3>Settings</h3>
+        </div>
+
+
+        <div class="row">
+
+            <!-- Settings Cards init -->
+
+            <div class="column"> <!-- SERVER Login Setting -->
+                <div class="card">
+                    <p><i></i>Server Authentication</p>
+
+                    <form method="POST" name="set-Login1" id="set-login2" action="/settings_set">
+                        <label for="login_User">User:</label>
+                        <input type="text" id="login_User" name="login_User"
+                            style="border: 1px #000000 solid !important; "><br><br>
+                        <label for="login_Password">Pass:&nbsp</label>
+                        <input type="password" id="login_Password" name="login_Password"
+                            style="border: 1px #000000 solid !important;"><br><br>
+                        <label>
+                            <input type='checkbox' onclick="ToggleLoginPassDots() " /> Show Password
+                        </label>
+                        <input type="submit" value="Update" class="login">
+                    </form>
+
+                    </p>
+                </div>
+            </div>
+
+
+
+            <div class="column"> <!-- Room Name Setting -->
+                <div class="card">
+                    <p><i></i>Room Name</p>
+
+                    <form method="POST" name="set-RoomName" id="set-RoomName" action="/settings_set">
+                        <label for="Room_Name">User:</label>
+                        <input type="text" id="Room_Name" name="Room_Name"
+                            style="border: 1px #000000 solid !important; "><br><br>
+                        <input type="submit" value="Update" class="login">
+                    </form>
+
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="column"> <!-- WiFi SSID Settings -->
+                <div class="card">
+                    <p><i></i>WiFi Select</p>
+                    <p>
+                    <form method="POST" action="/settings_set">
+                        <label for="WiFi_SSID">SSID:</label>
+                        <select name="WiFi_SSID" id="WiFi_SSID" style="border: 1px #4c7faf solid !important;">
+                            %WIFINETS%
+                        </select>
+
+                        <br><br>
+                        <label for="WiFi_Password">Pass:</label>
+                        <input type="password" id="WiFi_Password" name="WiFi_Password"
+                            style="border: 1px #4c7faf solid !important;"><br><br>
+                        <label>
+                            <input type='checkbox' onclick="ToggleWifiPassDots() " /> Show Password
+                        </label>
+                        <input type="submit" value="Update and Reboot" class="login">
+                    </form>
+                    </p>
+                    <div id="indications">
+                        <h3 style="font-size: calc(1px + 0.390625vw);">
+                            When you click the update button, the system disconnects from
+                            the current network and connects to the new network,
+                            so this page will no longer be available until you connect
+                            to the new network.
+
+                            Attention! if the SSID or password is incorrect
+                            the system will not connect and you will be locked out!
+                            You will need to put the system into AP (Access Point) mode.
+                            and make the change from there.
+                        </h3>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="card">
+
+                    <p><i></i>MQTT Authentication</p>
+
+                    <form method="POST" name="MQTT" id="MQTT" action="/settings_set">
+                        <label for="MQTT_Server">HELIX Server:</label>
+
+                        <input type="text" id="MQTT_Server" name="MQTT_Server" placeholder="xxx.xxx.xxx.xxx"
+                            style="border: 1px #000000 solid !important; "><br><br>
+
+                        <label for="MQTT_User">User:</label>
+                        <input type="text" id="MQTT_User" name="MQTT_User"
+                            style="border: 1px #000000 solid !important; "><br><br>
+
+                        <label for="MQTT_Password">Pass:&nbsp</label>
+                        <input type="password" id="MQTT_Password" name="MQTT_Password"
+                            style="border: 1px #000000 solid !important;"><br><br>
+
+                        <label>
+                            <input type='checkbox' onclick=" ToggleMQTTPassDots() " /> Show Password
+                        </label>
+                        <input type="submit" value="Update" class="login">
+                    </form>
+                    </p>
+
+                    <div id="indications">
+                        <h3 style="font-size: calc(1px + 0.390625vw);">
+
+                            %SUGGESTEDSERVER%
+
+                        </h3>
+
+
+
+                    </div>
+                </div>
+
+
+
+                <!-- Settings Card template:
+
+    simply add:
+
+ <div class="column">
+    <div class="card"> 
+        	<p><i> ICON </i>Content Title</p>
+
+        CONTENT YOW NEED 
+    
+    </div>
+  </div>
+
+-->
+
+
+                <!-- Settings Cards END -->
+
+            </div>
+
+            <!-- </div>
+     <div class="row">
+    
+-->
+
+        </div>
+        <div id="footer">
+            <span class="logo_container">
+                <h3>&nbsp %SW_VERSION% %SIGNALSTRENGTH% </h3>
+            </span>
+        </div>
+
+        <script src="" async defer></script>
+
+
+        <script>
+            if (!!window.EventSource) {
+
+                var source = new EventSource('/AJAXSettings');
+
+                //AJAX Connector
+                source.addEventListener('open', function (e) {
+                    console.log("Events Connected");
+                }, false);
+
+                source.addEventListener('error', function (e) {
+                    if (e.target.readyState != EventSource.OPEN) {
+                        console.log("Events Disconnected");
+                    }
+                }, false);
+
+                //SERVER Login Setting
+                source.addEventListener('login_User', function (e) {
+                    document.getElementById("login_User").value = e.data;
+                    console.log("login_User", e.data);
+                }, false);
+                source.addEventListener('login_Password', function (e) {
+                    document.getElementById("login_Password").value = e.data;
+                    console.log("login_Password", "MASKED PASSWORD");
+                }, false);
+
+                //Room Name Setting
+                source.addEventListener('Room_Name', function (e) {
+                    document.getElementById("Room_Name").value = e.data;
+                    console.log("Room_Name", e.data);
+                }, false);
+
+                //WiFi SSID Settings
+                source.addEventListener('WiFi_SSID', function (e) {
+                    console.log("WiFi_SSID", e.data);
+                    var objSelect = document.getElementById('WiFi_SSID');           //metto il select in un oggetto per non ripeterlo
+                    for (var i = 0; i < objSelect.options.length; i++) {            //effettuo un ciclo per tutti i valori del select
+                        if (objSelect.options[i].text == e.data) {                  //se trovo il valore 
+                            objSelect.options[i].selected = true;                   //lo seleziono
+                            return;
+                        }
+                    }
+                    console.log("WiFi_SSID", e.data + " not found");
+                }, false);
+
+                source.addEventListener('WiFi_Password', function (e) {
+                    document.getElementById("WiFi_Password").value = e.data;
+                    console.log("WiFi_Password", "MASKED PASSWORD");
+                }, false);
+
+                source.addEventListener('MQTT_Server', function (e) {
+                    document.getElementById("MQTT_Server").value = e.data;
+                    console.log("MQTT_Server", e.data);
+                }, false);
+                source.addEventListener('MQTT_User', function (e) {
+                    document.getElementById("MQTT_User").value = e.data;
+                    console.log("MQTT_User", e.data);
+                }, false);
+                source.addEventListener('MQTT_Password', function (e) {
+                    document.getElementById("MQTT_Password").value = e.data;
+                    console.log("MQTT_Password", "MASKED PASSWORD");
+                }, false);
+
+
+
+
+            }
+
+
+        </script>
+
+        <script>
+
+            async function LoadAjax() {                                                 //
+                const response = await fetch('/UpdSettingsAjax', { method: 'POST' });
+                console.log(response);
+            }
+
+            function ToggleLoginPassDots() {
+                var x = document.getElementById("login_Password");
+                if (x.type === "password") {
+                    x.type = "text";
+                } else {
+                    x.type = "password";
+                }
+            }
+
+            function ToggleWifiPassDots() {
+                var x = document.getElementById("WiFi_Password");
+                if (x.type === "password") {
+                    x.type = "text";
+                } else {
+                    x.type = "password";
+                }
+            }
+
+
+            function ToggleMQTTPassDots() {
+                var x = document.getElementById("MQTT_Password");
+                if (x.type === "password") {
+                    x.type = "text";
+                } else {
+                    x.type = "password";
+                }
+            }
+
+
+            function getURLParameter(sParam) {
+                var sPageURL = window.location.search.substring(1);
+                var sURLVariables = sPageURL.split('&');
+                for (var i = 0; i < sURLVariables.length; i++) {
+                    var sParameterName = sURLVariables[i].split('=');
+                    if (sParameterName[0] == sParam) {
+                        return sParameterName[1];
+                    }
+                }
+            }
+
+            if (getURLParameter("msg")) {
+                document.getElementById("message").innerText = decodeURI(getURLParameter("msg"));
+            }
+
+
+        </script>
+</body>
+
+</html>

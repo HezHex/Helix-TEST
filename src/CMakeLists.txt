@@ -1,0 +1,16 @@
+SET(SOURCES screens/ui_SCREENIdle.c
+    screens/ui_SCREENmain.c
+    screens/ui_SCREENConnections.c
+    ui.c
+    components/ui_comp_hook.c
+    ui_helpers.c
+    ui_events.c
+    images/ui_img_hex_background_png.c
+    images/ui_img_tdrelased_png.c
+    images/ui_img_tdpressed_png.c
+    images/ui_img_turelased_png.c
+    images/ui_img_tupressed_png.c
+    fonts/ui_font_MicrogrammaSMALL16.c
+    fonts/ui_font_NebulaBIG.c)
+
+add_library(ui ${SOURCES})
